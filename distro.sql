@@ -30,7 +30,7 @@ CREATE TABLE `CRIADOR` (
   PRIMARY KEY (`IDCRIADOR`),
   KEY `ID_DISTRO` (`ID_DISTRO`),
   CONSTRAINT `CRIADOR_ibfk_1` FOREIGN KEY (`ID_DISTRO`) REFERENCES `DISTRO` (`IDDISTRO`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +47,8 @@ INSERT INTO `CRIADOR` VALUES
 (5,'SYSTEM76',5),
 (6,'JUAN ROMERO PARDINES',6),
 (7,'COPA NATANEL',7),
-(8,'PATRICK VOLKERDING',8);
+(8,'PATRICK VOLKERDING',8),
+(9,'MARK SHUTTLEWORTH',9);
 /*!40000 ALTER TABLE `CRIADOR` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +70,7 @@ CREATE TABLE `DISTRO` (
   `LANCAMENTO` year(4) DEFAULT NULL,
   `HORARIO_INSERCAO` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`IDDISTRO`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,38 +87,35 @@ INSERT INTO `DISTRO` VALUES
 (5,'POP!_OS','LTS','UBUNTU','PRODUTIVIDADE/JOGOS','COSMIC','APT',2017,'2026-02-18 22:49:59'),
 (6,'VOID LINUX','ROLLING RELEASE','INDEPENDENTE','LEVEZA','XFCE','XBPS',2008,'2026-02-20 15:27:00'),
 (7,'ALPINE LINUX','LTS','INDEPENDENTE','SIMPLICIDADE/SEGURANÇA',NULL,'APK',2005,'2026-02-20 15:27:00'),
-(8,'SLACKWARE','FIXED-RELEASE','SLS','KISS','XFCE','SLACKPKG',1993,'2026-02-20 15:39:06');
+(8,'SLACKWARE','FIXED-RELEASE','SLS','KISS','XFCE','SLACKPKG',1993,'2026-02-20 15:39:06'),
+(9,'UBUNTU SERVER','LTS','DEBIAN','GERAL/CLOUD',NULL,'APT',2004,'2026-02-27 14:02:25');
 /*!40000 ALTER TABLE `DISTRO` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Temporary table structure for view `V_DISTRO`
+-- Temporary table structure for view `V_LINUX`
 --
 
-DROP TABLE IF EXISTS `V_DISTRO`;
-/*!50001 DROP VIEW IF EXISTS `V_DISTRO`*/;
+DROP TABLE IF EXISTS `V_LINUX`;
+/*!50001 DROP VIEW IF EXISTS `V_LINUX`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
-/*!50001 CREATE VIEW `V_DISTRO` AS SELECT
- 1 AS `IDDISTRO`,
-  1 AS `NOME`,
+/*!50001 CREATE VIEW `V_LINUX` AS SELECT
+ 1 AS `NOME`,
   1 AS `TIPO`,
   1 AS `BASE`,
   1 AS `FOCO`,
   1 AS `DESKTOP`,
   1 AS `GERENCIADOR`,
   1 AS `LANCAMENTO`,
-  1 AS `HORARIO_INSERCAO`,
-  1 AS `IDCRIADOR`,
-  1 AS `DESENVOLVEDOR`,
-  1 AS `ID_DISTRO` */;
+  1 AS `DESENVOLVEDOR` */;
 SET character_set_client = @saved_cs_client;
 
 --
--- Final view structure for view `V_DISTRO`
+-- Final view structure for view `V_LINUX`
 --
 
-/*!50001 DROP VIEW IF EXISTS `V_DISTRO`*/;
+/*!50001 DROP VIEW IF EXISTS `V_LINUX`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -125,8 +123,8 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb3 */;
 /*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `V_DISTRO` AS select `D`.`IDDISTRO` AS `IDDISTRO`,`D`.`NOME` AS `NOME`,`D`.`TIPO` AS `TIPO`,`D`.`BASE` AS `BASE`,`D`.`FOCO` AS `FOCO`,`D`.`DESKTOP` AS `DESKTOP`,`D`.`GERENCIADOR` AS `GERENCIADOR`,`D`.`LANCAMENTO` AS `LANCAMENTO`,`D`.`HORARIO_INSERCAO` AS `HORARIO_INSERCAO`,`C`.`IDCRIADOR` AS `IDCRIADOR`,`C`.`DESENVOLVEDOR` AS `DESENVOLVEDOR`,`C`.`ID_DISTRO` AS `ID_DISTRO` from (`DISTRO` `D` join `CRIADOR` `C` on(`D`.`IDDISTRO` = `C`.`ID_DISTRO`)) */;
+/*!50013 DEFINER=`zenux`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `V_LINUX` AS select `D`.`NOME` AS `NOME`,`D`.`TIPO` AS `TIPO`,`D`.`BASE` AS `BASE`,`D`.`FOCO` AS `FOCO`,ifnull(`D`.`DESKTOP`,'***') AS `DESKTOP`,`D`.`GERENCIADOR` AS `GERENCIADOR`,`D`.`LANCAMENTO` AS `LANCAMENTO`,`C`.`DESENVOLVEDOR` AS `DESENVOLVEDOR` from (`DISTRO` `D` join `CRIADOR` `C` on(`D`.`IDDISTRO` = `C`.`ID_DISTRO`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -140,4 +138,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2026-02-20 13:09:52
+-- Dump completed on 2026-02-27 11:35:04
